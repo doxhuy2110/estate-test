@@ -3,11 +3,13 @@ import "./chat.scss";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 import { format } from "timeago.js";
+import { SocketContext } from "../../context/SocketContext";
 
 
 function Chat({ chats }) {
   const [chat, setChat] = useState(null);
   const { currentUser } = useContext(AuthContext);
+  const { socket } = useContext(SocketContext);
 
   const handleOpenChat = async (id, receiver) => {
     try {
@@ -38,8 +40,13 @@ function Chat({ chats }) {
     }
   };
 
+  const testSocket = () => {
+    socket.emit("test", "Hello from client");
+  };
+
   return (
     <div className="chat">
+      <button onClick={testSocket}>Test</button>
       <div className="messages">
         <h1>Messages</h1>
         {
