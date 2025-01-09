@@ -117,3 +117,19 @@ export const readChat = async (req, res) => {
         res.status(500).json({ message: "Failed to read chat!" });
     }
 };
+
+export const findChat = async (req, res) => {
+    const userId = req.params.id;
+    try {
+        const chat = await prisma.chat.findFirst({
+            where: {
+                userIDs: { has: userId },
+            },
+        });
+
+        res.status(200).json(chat);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Failed to find chat!" });
+    }
+};

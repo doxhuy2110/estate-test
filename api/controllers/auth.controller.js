@@ -4,33 +4,32 @@ import prisma from '../lib/prisma.js';
 
 export const register = async (req, res) => {
 
-    const { username, email, password } = req.body;
-    try {
-        //hash password
-        const hashedPassword = bcrypt.hashSync(password, 10);
-        console.log(hashedPassword);
+  const { username, email, password } = req.body;
+  try {
+    //hash password
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    console.log(hashedPassword);
 
-        //CREATE A USER AND SAVE TO DATABASE
-        const newUser = await prisma.user.create({
-            data: {
-                username,
-                email,
-                password: hashedPassword
-            }
-        });
+    //CREATE A USER AND SAVE TO DATABASE
+    const newUser = await prisma.user.create({
+      data: {
+        username,
+        email,
+        password: hashedPassword
+      }
+    });
 
-        console.log(newUser);
-        res.status(201).json({ message: 'User created successfully' });
-    } catch (err)
-    {
-        console.log(err);
-        res.status(500).json({ message: "Failed to create user!" });
+    console.log(newUser);
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to create user!" });
 
-    }
+  }
 }
 
-export const login = async(req, res) => {
-    const { username, password } = req.body;
+export const login = async (req, res) => {
+  const { username, password } = req.body;
 
   try {
     // CHECK IF THE USER EXISTS
@@ -51,21 +50,21 @@ export const login = async(req, res) => {
     // GENERATE COOKIE TOKEN AND SEND TO THE USER
 
     // res.setHeader("Set-Cookie", "test=" + "myValue").json("success")
-    
+
     const age = 1000 * 60 * 60 * 24 * 7;
 
     const token = jwt.sign(
-        {
-          id: user.id,
-          isAdmin: false,
-        },
-        process.env.JWT_SECRET_KEY,
-        { expiresIn: age }
-      );
-      
-      const { password: userPassword, ...userInfo } = user;
+      {
+        id: user.id,
+        isAdmin: user.isAdmin,
+      },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: age }
+    );
 
-      res
+    const { password: userPassword, ...userInfo } = user;
+
+    res
       .cookie("token", token, {
         httpOnly: true,
         // secure:true,

@@ -1,4 +1,4 @@
-import { Suspense, useContext, useEffect } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import Chat from "../../components/chat/Chat";
 import List from "../../components/list/List";
 import apiRequest from "../../lib/apiRequest";
@@ -9,6 +9,7 @@ import { AuthContext } from "../../context/AuthContext"
 function ProfilePage() {
 
   const data = useLoaderData();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const { updateUser, currentUser } = useContext(AuthContext);
 
@@ -25,12 +26,36 @@ function ProfilePage() {
     }
   }
 
+
+
+  const checkAdmin = async () => {
+    try {
+      const res = await apiRequest.get("/test/should-be-admin");
+      if (res.data.isAdmin) {
+        setIsAdmin(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    checkAdmin();
+  }, []);
+
   return (
-     (< div className="profilePage" >
+    (< div className="profilePage" >
       <div className="details">
         <div className="wrapper">
           <div className="title">
             <h1>User Information</h1>
+            {
+              isAdmin && (
+                <Link to="/admin">
+                  <button>Admin Panel</button>
+                </Link>
+              )
+            }
             <Link to="/profile/update">
               <button>Update Profile</button>
             </Link>
@@ -79,12 +104,12 @@ function ProfilePage() {
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-        <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<p>Loading...</p>}>
             <Await
               resolve={data.chatResponse}
               errorElement={<p>Error loading chats!</p>}
             >
-              {(chatResponse) => <Chat chats={chatResponse.data}/>}
+              {(chatResponse) => <Chat chats={chatResponse.data} />}
             </Await>
           </Suspense>
         </div>

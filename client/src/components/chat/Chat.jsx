@@ -5,8 +5,12 @@ import apiRequest from "../../lib/apiRequest";
 import { format } from "timeago.js";
 import { SocketContext } from "../../context/SocketContext";
 import { useNotificationStore } from "../../lib/notificationStore";
+import { useLocation } from "react-router-dom";
+
 
 function Chat({ chats }) {
+  const location = useLocation();
+
   const [chat, setChat] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
@@ -14,6 +18,22 @@ function Chat({ chats }) {
   const messageEndRef = useRef();
 
   const decrease = useNotificationStore((state) => state.decrease);
+
+  useEffect(() => {
+    if (location.state?.chatId && location.state?.receiver) {
+      setChat({
+
+        id: location.state.chatId,
+        receiver: location.state.receiver,
+        messages: [],
+      });
+      handleOpenChat(location.state.chatId, location.state.receiver);
+      
+      // Xóa state để tránh mở lại chat khi refresh
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
+
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -68,9 +88,9 @@ function Chat({ chats }) {
         }
       });
     }
-    // return () => {
-    //   socket.off("getMessage");
-    // };
+    return () => {
+      socket.off("getMessage");
+    };
   }, [socket, chat]);
 
   return (
@@ -99,7 +119,7 @@ function Chat({ chats }) {
         <div className="chatBox">
           <div className="top">
             <div className="user">
-              <img src={chat.receiver.avatar || "noavatar.png"} alt="" />
+              <img src={chat.receiver.avatar || "/noavatar.png"} alt="" />
               {chat.receiver.username}
             </div>
             <span className="close" onClick={() => setChat(null)}>

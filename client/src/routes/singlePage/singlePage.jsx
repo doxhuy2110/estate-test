@@ -7,6 +7,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
+import prisma from "../../../../api/lib/prisma.js";
 
 function SinglePage() {
   const post = useLoaderData();
@@ -16,7 +17,7 @@ function SinglePage() {
   // console.log(post);
 
   const handleSave = async () => {
-    
+
     if (!currentUser) {
       navigate("/login");
     }
@@ -28,6 +29,36 @@ function SinglePage() {
       console.log(err);
       setSaved((prev) => !prev);
     }
+  };
+
+  const handleSenMessage = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+    try {
+      const chat = await apiRequest.post("/chats/find/" + post.userId);
+      console.log(chat);
+      if (chat.data === null) {
+        await apiRequest.post("/chats", { receiverId: post.userId });
+      }
+      navigate("/profile/", {
+        state: {
+        chatId: chat.data.id,
+          receiver: {
+          
+          id: post.userId,
+          username: post.user.username, // Thêm username nếu có
+          avatar: post.user.avater // Thêm avatar nếu có
+        }
+      }
+    });
+    }
+    catch (err) {
+      console.log(err);
+    }
+    
+
   };
 
 
@@ -128,7 +159,7 @@ function SinglePage() {
             <Map items={[post]} />
           </div>
           <div className="buttons">
-            <button>
+            <button onClick={() => handleSenMessage()}>
               <img src="/chat.png" alt="" />
               Send a Message
             </button>

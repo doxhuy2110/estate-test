@@ -22,7 +22,6 @@ app.use('/api/users', userRoute);
 app.use('/api/chats', chatRoute);
 app.use('/api/messages', messageRoute);
 
-
 // Bắt đầu server
 app.listen(8800, () => {
     console.log('Server is running on http://localhost:8800');

@@ -115,6 +115,7 @@ export const deletePost = async (req, res) => {
         const post = await prisma.post.findUnique({
             where: { id }
         });
+        
 
         if (post.userId !== tokenUserId) {
             return res.status(403).json({ message: 'You are not authorized to delete this post!' });
