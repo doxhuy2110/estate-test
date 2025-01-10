@@ -20,7 +20,15 @@ function UpdatePostPage() {
         }
     }, [post]);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    // Xóa ảnh tại index cụ thể
+    const handleDeleteImage = (index) => {
+        setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    };
+
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -148,19 +156,19 @@ function UpdatePostPage() {
                         </div>
                         <div className="item">
                             <label htmlFor="size">Total Size (sqft)</label>
-                            <input min={0} id="size" name="size" type="number" defaultValue={post.postDetail.size}/>
+                            <input min={0} id="size" name="size" type="number" defaultValue={post.postDetail.size} />
                         </div>
                         <div className="item">
                             <label htmlFor="school">School</label>
-                            <input min={0} id="school" name="school" type="number" defaultValue={post.postDetail.school}/>
+                            <input min={0} id="school" name="school" type="number" defaultValue={post.postDetail.school} />
                         </div>
                         <div className="item">
                             <label htmlFor="bus">bus</label>
-                            <input min={0} id="bus" name="bus" type="number" defaultValue={post.postDetail.bus}/>
+                            <input min={0} id="bus" name="bus" type="number" defaultValue={post.postDetail.bus} />
                         </div>
                         <div className="item">
                             <label htmlFor="restaurant">Restaurant</label>
-                            <input min={0} id="restaurant" name="restaurant" type="number" defaultValue={post.postDetail.restaurant}/>
+                            <input min={0} id="restaurant" name="restaurant" type="number" defaultValue={post.postDetail.restaurant} />
                         </div>
                         <button className="sendButton">Confirm</button>
                         {error && <span>error</span>}
@@ -168,8 +176,16 @@ function UpdatePostPage() {
                 </div>
             </div>
             <div className="sideContainer">
-                {post.images.map((image, index) => (
-                    <img src={image} key={index} alt="" />
+                {images.map((image, index) => (
+                    <div key={index} className="imageContainer">
+                        <img src={image} alt={`Image ${index + 1}`} />
+                        <button
+                            className="deleteButton"
+                            onClick={() => handleDeleteImage(index)}
+                        >
+                            x
+                        </button>
+                    </div>
                 ))}
                 <UploadWidget
                     uwConfig={{
@@ -181,6 +197,7 @@ function UpdatePostPage() {
                     setState={setImages}
                 />
             </div>
+
         </div>
     );
 }

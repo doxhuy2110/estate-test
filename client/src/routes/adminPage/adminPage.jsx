@@ -59,16 +59,16 @@ function AdminPage() {
         }
     };
 
-    const removePost = async (postId) => {
-        try {
-            if (confirm(`Xác nhận xóa bài viết`) == true) {
-                const res = await apiRequest.delete(`/posts/${postId}`);
-                fetchPostList();
-            }
-        } catch (err) {
-            console.error("Error while removing post:", err);
-        }
-    };
+    // const removePost = async (postId) => {
+    //     try {
+    //         if (confirm(`Xác nhận xóa bài viết`) == true) {
+    //             const res = await apiRequest.delete(`/posts/${postId}`);
+    //             fetchPostList();
+    //         }
+    //     } catch (err) {
+    //         console.error("Error while removing post:", err);
+    //     }
+    // };
 
     const getUserName = (userId) => {
         const user = userList.find(user => user.id === userId);
@@ -143,8 +143,8 @@ function AdminPage() {
                             <div className="post-list">
                                 {postList.map((post, index) => {
                                     return (
-                                        <div key={index} className="post" >
-                                            <img src={post.images[0]} alt="Avatar" className="avatar" onClick={() => navigate(`/${post.id}`)}/>
+                                        <div key={index} className="post"  onClick={() => navigate(`/${post.id}`)}>
+                                            <img src={post.images[0]} alt="Avatar" className="avatar"/>
                                             <div className="post-info">
                                                 <div className="post-username">{() => getUserName(post.userId)}</div>
                                                 <div className="post-title">Title: {post.title}</div>
@@ -152,9 +152,9 @@ function AdminPage() {
                                                 <div className="post-address">Address: {post.address}</div>
                                                 <div className="post-date">Date: {new Date(post.createdAt).toLocaleDateString()}</div>
                                             </div>
-                                            <div className="post-item-content">
+                                            {/* <div className="post-item-content">
                                                 <button className="btn btn-danger" onClick={() => removePost(post.id)}>Xóa</button>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     );
                                 })}
