@@ -22,3 +22,8 @@ export const profilePageLoader = async () => {
         chatResponse: chatPromise,
     });
 };
+
+// export const updatePostLoader = async ({ request, params }) => {
+//     const res = await apiRequest("/posts/" + params.id);
+//     return res.data;
+// };
