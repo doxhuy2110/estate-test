@@ -9,9 +9,10 @@ export default defineConfig({
     }
   },
   server: {
+    historyApiFallback: true,  // Thêm dòng này
     proxy: {
       '/api': {
-        target: 'https://estate-app-w2y3.onrender.com', // thay port phù hợp
+        target: 'https://estate-app-w2y3.onrender.com',
         changeOrigin: true
       }
     }
