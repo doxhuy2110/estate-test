@@ -7,7 +7,6 @@ import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
-import prisma from "../../../../api/lib/prisma.js";
 
 function SinglePage() {
   const post = useLoaderData();
