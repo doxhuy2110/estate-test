@@ -68,7 +68,7 @@ export const login = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      domain: 'https://estate-app-w2y3.onrender.com', // domain của server
+      domain: 'https://estate-test.onrender.com', // domain của server
       maxAge: age,
     }).status(200).json(userInfo);
   } catch (err) {

@@ -12,7 +12,7 @@ import newsRoute from './routes/news.route.js';
 
 const app = express();
 
-app.use(cors({ origin: "https://estate-app-hilife.vercel.app/", credentials: true }));
+app.use(cors({ origin: "https://estate-hilife.onrender.com", credentials: true }));
 app.use(cookieParser());
 app.use(express.json({ limit: '50mb' })); // Tăng giới hạn JSON
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
