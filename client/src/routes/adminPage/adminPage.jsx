@@ -3,6 +3,8 @@ import "./adminPage.css";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import apiRequest from "../../lib/apiRequest";
+import Card from "../../components/card/Card";
+import NewsItem from "../../components/newsItem/newsItem";
 
 function AdminPage() {
     const navigate = useNavigate();
@@ -21,10 +23,14 @@ function AdminPage() {
         }
     };
 
+
+
     const [activeTab, setActiveTab] = useState("");
 
-    const handleUserManage = () => setActiveTab("userManage");
-    const handlePostManage = () => setActiveTab("postManage");
+    const handleUserManage = () => { setActiveTab("userManage"); fetchUserList(); };
+    const handlePostManage = () => { setActiveTab("postManage"); fetchPostList(); };
+    const handleNewsManage = () => { setActiveTab("newsManage"); fetchNewsList(); };
+
 
     const fetchUserList = async () => {
         try {
@@ -58,6 +64,39 @@ function AdminPage() {
             console.error("Error while fetching post list:", err);
         }
     };
+    const handleDeletePost = async (id) => {
+        try {
+            if (confirm("Do you really want to delete the post?")) {
+                await apiRequest.delete("/posts/" + id);
+                fetchPostList();
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const [newsList, setNewsList] = useState([]);
+    const fetchNewsList = async () => {
+        try {
+            const res = await apiRequest.get("/news");
+            setNewsList(res.data);
+        } catch (err) {
+            console.error("Error while fetching news list:", err);
+        }
+    };
+
+    const handleDeleteNews = async (id) => {
+        try {
+            if (confirm("Do you really want to delete the news?")) {
+                await apiRequest.delete("/news/" + id);
+                fetchNewsList();
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
 
     // const removePost = async (postId) => {
     //     try {
@@ -79,6 +118,7 @@ function AdminPage() {
         checkAdmin();
         fetchUserList();
         fetchPostList();
+        fetchNewsList();
     }, []);
 
     return (
@@ -106,6 +146,20 @@ function AdminPage() {
                         >
                             <img src={"/post_icon.png"} alt="Post Manage Icon" />
                             <p>Quản lý bài viết</p>
+                        </div>
+                        <div
+                            className={`sidebar-option ${activeTab === "newsManage" ? "active" : ""}`}
+                            onClick={handleNewsManage}
+                        >
+                            <img src={"/news-icon.png"} alt="News Manage Icon" />
+                            <p>Quản lý tin tức</p>
+                        </div>
+                        <div
+                            className={`sidebar-option`}
+                            onClick={() => navigate("/")}
+                        >
+                            <img src={"/back.png"} alt="News Manage Icon" />
+                            <p>Trở lại</p>
                         </div>
                     </div>
 
@@ -143,24 +197,46 @@ function AdminPage() {
                             <div className="post-list">
                                 {postList.map((post, index) => {
                                     return (
-                                        <div key={index} className="post"  onClick={() => navigate(`/${post.id}`)}>
-                                            <img src={post.images[0]} alt="Avatar" className="avatar"/>
-                                            <div className="post-info">
-                                                <div className="post-username">{() => getUserName(post.userId)}</div>
-                                                <div className="post-title">Title: {post.title}</div>
-                                                <div className="post-price">Price: {post.price}$</div>
-                                                <div className="post-address">Address: {post.address}</div>
-                                                <div className="post-date">Date: {new Date(post.createdAt).toLocaleDateString()}</div>
+                                        <div className="post" key={index}>
+                                            <Card item={post} />
+                                            <div className="buttons">
+
+                                                <button className="button" onClick={() => handleDeletePost(post.id)}>
+                                                    <img src="/delete.png" alt="Delete" />
+                                                    Delete
+                                                </button>
                                             </div>
-                                            {/* <div className="post-item-content">
-                                                <button className="btn btn-danger" onClick={() => removePost(post.id)}>Xóa</button>
-                                            </div> */}
                                         </div>
                                     );
                                 })}
                             </div>
                         </div>
                     )}
+                    {activeTab === "newsManage" && (
+                        <div className="news-manage">
+                            <h1>Danh sách tin tức</h1>
+                            <div className="news-list">
+                                {newsList.map((news, index) => {
+                                    return (
+                                        <div className="news" key={index}>
+                                            <NewsItem item={news} />
+                                            <div className="buttons">
+                                                <button className="button" onClick={() => navigate(`/news/edit/${news.id}`)}>
+                                                    <img src="/edit.png" alt="Edit" />
+                                                    Edit
+                                                </button>
+                                                <button className="button" onClick={() => handleDeleteNews(news.id)}>
+                                                    <img src="/delete.png" alt="Delete" />
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    )
+                    }
                 </div>
 
             </div>

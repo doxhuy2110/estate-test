@@ -70,6 +70,53 @@ export const deleteUser = async (req, res) => {
   // }
 
   try {
+    await prisma.savedPost.deleteMany({
+      where: { userId: id }
+    });
+    const posts = await prisma.post.findMany({
+      where: { userId: id }
+    });
+    await prisma.postDetail.deleteMany({
+      where: {
+        postId: {
+          in: posts.map(post => post.id)
+        }
+      }
+    });
+    await prisma.post.deleteMany({
+      where: { userId: id }
+    });
+    await prisma.message.deleteMany({
+      where: {
+        userId: id
+      }
+    });
+    const chats = await prisma.chat.findMany({
+      where: {
+        userIDs: {
+          hasSome: [id]
+        }
+      }
+    });
+
+    // Xóa các tin nhắn trong từng chat
+    await prisma.message.deleteMany({
+      where: {
+        chatId: {
+          in: chats.map(chat => chat.id)
+        }
+      }
+    });
+
+    // Xóa các chat của người dùng
+    await prisma.chat.deleteMany({
+      where: {
+        userIDs: {
+          hasSome: [id]
+        }
+      }
+    });
+
     await prisma.user.delete({
       where: { id }
     });

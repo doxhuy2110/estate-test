@@ -8,9 +8,13 @@ import apiRequest from "../../lib/apiRequest";
 function Card({ item }) {
   const [post, setPost] = useState(item);
   const [saved, setSaved] = useState(item.isSaved);
+const[inAdmin, setInAdmin] = useState(false);
 
   useEffect(() => {
     getPost();
+    if(window.location.pathname === "/admin"){
+      setInAdmin(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -111,7 +115,7 @@ function Card({ item }) {
               <span>{item.bathroom} bathroom</span>
             </div>
           </div>
-          {!isMe && <div className="icons">
+          {!isMe&&!inAdmin && <div className="icons">
             <div className="icon"
               onClick={handleSave}
               style={{
