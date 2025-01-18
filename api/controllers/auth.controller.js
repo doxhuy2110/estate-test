@@ -64,12 +64,10 @@ export const login = async (req, res) => {
 
     const { password: userPassword, ...userInfo } = user;
 
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        // secure:true,
-        maxAge: age,
-      }).status(200).json(userInfo)
+    res.status(200).json({
+      ...userInfo,
+      token  // Thêm token vào đây
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to login!" });
