@@ -64,10 +64,13 @@ export const login = async (req, res) => {
 
     const { password: userPassword, ...userInfo } = user;
 
-    res.status(200).json({
-      ...userInfo,
-      token  // Thêm token vào đây
-    });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      domain: '.onrender.com', // domain của server
+      maxAge: age,
+    })
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to login!" });
