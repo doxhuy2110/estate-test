@@ -12,7 +12,7 @@ export default defineConfig({
     historyApiFallback: true,  // Thêm dòng này
     proxy: {
       '/api': {
-        target: 'https://estate-eahn340qf-doxhuy2104s-projects.vercel.app/',
+        target: 'https://estate-app-w2y3.onrender.com',
         changeOrigin: true
       }
     }

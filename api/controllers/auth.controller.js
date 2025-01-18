@@ -68,7 +68,7 @@ export const login = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      domain: 'https://estate-eahn340qf-doxhuy2104s-projects.vercel.app/', // domain của server
+      domain: 'https://estate-app-w2y3.onrender.com', // domain của server
       maxAge: age,
     })
   } catch (err) {
