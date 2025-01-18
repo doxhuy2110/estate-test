@@ -59,6 +59,23 @@ model PostDetail {
   postId     String  @unique @db.ObjectId
 }
 
+model News {
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  desc       String
+  image      String
+  createdAt  DateTime        @default(now())
+  paragraphs NewsParagraph[]
+}
+
+model NewsParagraph {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  text   String
+  image  String?
+  newsId String  @db.ObjectId
+  news   News    @relation(fields: [newsId], references: [id])
+}
+
 model SavedPost {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   user      User     @relation(fields: [userId], references: [id])

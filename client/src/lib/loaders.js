@@ -5,6 +5,11 @@ export const singlePageLoader = async ({ request, params }) => {
     const res = await apiRequest("/posts/" + params.id);
     return res.data;
 };
+
+export const newsPageLoader = async ({ request, params }) => {
+    const res = await apiRequest.get("/news/" + params.id);
+    return res.data;
+};
 export const listPageLoader = async ({ request, params }) => {
     console.log(request);
     const query = request.url.split("?")[1];
@@ -14,6 +19,12 @@ export const listPageLoader = async ({ request, params }) => {
     });
 };
 
+export const newPostPageLoader = async ({ request, params }) => {
+    const res = await apiRequest("/news");
+    return res.data;
+}
+
+
 export const profilePageLoader = async () => {
     const postPromise = apiRequest("/users/profilePosts");
     const chatPromise = apiRequest("/chats");
@@ -22,6 +33,7 @@ export const profilePageLoader = async () => {
         chatResponse: chatPromise,
     });
 };
+
 
 // export const updatePostLoader = async ({ request, params }) => {
 //     const res = await apiRequest("/posts/" + params.id);

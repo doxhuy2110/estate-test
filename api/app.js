@@ -7,6 +7,7 @@ import testRoute from './routes/test.route.js';
 import userRoute from './routes/user.route.js';
 import chatRoute from './routes/chat.route.js';
 import messageRoute from './routes/message.route.js';
+import newsRoute from './routes/news.route.js';
 
 
 const app = express();
@@ -21,6 +22,7 @@ app.use('/api/test', testRoute);
 app.use('/api/users', userRoute);
 app.use('/api/chats', chatRoute);
 app.use('/api/messages', messageRoute);
+app.use('/api/news', newsRoute);
 
 // Bắt đầu server
 app.listen(8800, () => {

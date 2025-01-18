@@ -56,6 +56,13 @@ function ProfilePage() {
                 </Link>
               )
             }
+            {
+              isAdmin && (
+                <Link to="/news/add">
+                  <button>Add news</button>
+                </Link>
+              )
+            }
             <Link to="/profile/update">
               <button>Update Profile</button>
             </Link>

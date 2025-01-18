@@ -33,7 +33,7 @@ function SinglePage() {
     }
   };
 
-  const handleSenMessage = async () => {
+  const handleSendMessage = async () => {
     if (!currentUser) {
       navigate("/login");
       return;
@@ -199,7 +199,7 @@ function SinglePage() {
           </div>
           {!isMe
             ? <div className="buttons">
-              <button onClick={() => handleSenMessage()}>
+              <button onClick={() => handleSendMessage()}>
                 <img src="/chat.png" alt="" />
                 Send a Message
               </button>

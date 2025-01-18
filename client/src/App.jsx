@@ -4,16 +4,19 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ListPage from "./routes/listPage/listPage";
-import  {Layout, RequiredAuth } from "./routes/layout/layout";
+import { Layout, RequiredAuth } from "./routes/layout/layout";
 import SinglePage from "./routes/singlePage/singlePage";
 import ProfilePage from "./routes/profilePage/profilePage";
 import Login from "./routes/login/login";
 import Register from "./routes/register/register";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 import NewPostPage from "./routes/newPostPage/newPostPage";
-import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
+import { listPageLoader, newPostPageLoader, newsPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
 import AdminPage from "./routes/adminPage/AdminPage";
 import UpdatePostPage from "./routes/updatePostPage/updatePostPage";
+import NewsList from "./routes/newsList/newsList";
+import NewsPage from "./routes/newsPage/newsPage";
+import AddNewsPage from "./routes/addNewsPage/addNewsPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -28,14 +31,23 @@ function App() {
         {
           path: "/list",
           element: <ListPage />,
-          loader:listPageLoader,
+          loader: listPageLoader,
+        },
+        {
+          path: "/news",
+          element: <NewsList />,
+          loader: newPostPageLoader,
+        },
+        {
+          path: "/news/:id",
+          element: <NewsPage />,
+          loader: newsPageLoader,
         },
         {
           path: "/:id",
           element: <SinglePage />,
-          loader:singlePageLoader,
+          loader: singlePageLoader,
         },
-
         {
           path: "/login",
           element: <Login />
@@ -53,7 +65,7 @@ function App() {
         {
           path: "/profile",
           element: <ProfilePage />,
-          loader:profilePageLoader,
+          loader: profilePageLoader,
         },
         {
           path: "/profile/update",
@@ -66,19 +78,21 @@ function App() {
         {
           path: "/edit/:id",
           element: <UpdatePostPage />,
-          loader:singlePageLoader,
+          loader: singlePageLoader,
+        },
+        {
+          path: "/news/add",
+          element: <AddNewsPage />
         }
       ],
     },
     {
       path: "/admin",
-      element:<AdminPage />,
-      
+      element: <AdminPage />,
     }
   ]);
 
   return (
-
     <RouterProvider router={router} />
   );
 }

@@ -23,8 +23,8 @@ function Navbar() {
           <span>LamaEstate</span>
         </a>
         <a href="/">Home</a>
-        <a href="/">About</a>
-        <a href="/">Contact</a>
+        <a href="/list">Post</a>
+        <a href="/news">News</a>
         <a href="/">Agents</a>
       </div>
       <div className="right">
