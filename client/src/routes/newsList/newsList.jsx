@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import "./newsList.css";
-import NewsItem from '../../components/newsItem/newsItem';
+import NewsItem from '../../components/newsItem/NewsItem';
 import { Await, useLoaderData, useNavigate, useLocation } from 'react-router-dom';
 
 const NewsList = () => {
