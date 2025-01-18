@@ -12,7 +12,7 @@ import Register from "./routes/register/register";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 import NewPostPage from "./routes/newPostPage/newPostPage";
 import { listPageLoader, newsListLoader, newsPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
-import AdminPage from "./routes/adminPage/AdminPage";
+import AdminPage from "./routes/adminPage/adminPage";
 import UpdatePostPage from "./routes/updatePostPage/updatePostPage";
 import NewsList from "./routes/newsList/newsList";
 import NewsPage from "./routes/newsPage/newsPage";
