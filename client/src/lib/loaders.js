@@ -33,6 +33,7 @@ export const newsListLoader = async ({ request }) => {
 
 export const profilePageLoader = async () => {
     const postPromise = apiRequest("/users/profilePosts");
+    // console.log(postPromise);
     const chatPromise = apiRequest("/chats");
     return defer({
         postResponse: postPromise,

@@ -1,5 +1,4 @@
 {
-  "homepage": "doxhuy2104.github.io/estate-app",
   "name": "estateui",
   "private": true,
   "version": "0.0.0",
@@ -7,10 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^6.2.1",
