@@ -1,8 +1,15 @@
 import { Server } from "socket.io";
 
+// const io = new Server({
+//   cors: {
+//     origin: "https://estate-hilife.onrender.com",
+//   },
+// });
 const io = new Server({
   cors: {
-    origin: "https://estate-hilife.onrender.com",
+    origin: ["https://estate-hilife.onrender.com", "https://estate-test.onrender.com"],
+    methods: ["GET", "POST"],
+    credentials: true
   },
 });
 
@@ -39,4 +46,6 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen("4000");
+const PORT = process.env.PORT || 4000;
+io.listen(PORT);
+
