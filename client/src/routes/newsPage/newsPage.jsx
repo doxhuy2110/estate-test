@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
-import './NewsPage.css'; // Nhập tệp CSS
+import './newsPage.css'; // Nhập tệp CSS
 import DOMPurify from "dompurify";
 import apiRequest from '../../lib/apiRequest';
 
