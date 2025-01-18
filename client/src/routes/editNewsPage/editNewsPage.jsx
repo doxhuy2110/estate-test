@@ -1,17 +1,27 @@
-import { useState } from "react";
-import "./addNewsPage.scss";
+import { useEffect, useState } from "react";
+import "./editNewsPage.scss";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import apiRequest from "../../lib/apiRequest";
 import UploadWidget from "../../components/uploadWidget/UploadWidget";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
-function AddNewsPage() {
+function EditNewsPage() {
+  const news=useLoaderData();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [content, setContent] = useState("");
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (news) {
+      setTitle(news.title);
+      setDesc(news.desc);
+      setContent(news.content);
+      setImages([news.image]);
+    }
+  }, [news]);
   
   const navigate = useNavigate();
 
@@ -77,7 +87,7 @@ function AddNewsPage() {
   // Cập nhật modules với custom image handler
   modules.toolbar.handlers = {
     image: imageHandler
-  };
+  }; 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -96,21 +106,21 @@ function AddNewsPage() {
       };
       console.log(newsData);
 
-      const response = await apiRequest.post("/news", newsData);
+      const response = await apiRequest.put("/news/"+news.id, newsData);
 
       if (response.status === 200) {
-        navigate("/news/"+response.data.id);
+        navigate("/news/"+news.id);
       }
     } catch (err) {
       console.log(err);
-      setError(err.message || "Failed to add news");
+      setError(err.message || "Failed to Edit news");
     }
   };
 
   return (
-    <div className="addNewsPage">
+    <div className="editNewsPage">
       <div className="formContainer">
-        <h1>Add News</h1>
+        <h1>Edit News</h1>
         <div className="wrapper">
           <form onSubmit={handleSubmit}>
             <div className="item">
@@ -151,13 +161,13 @@ function AddNewsPage() {
               />
             </div>
             
-            <button className="sendButton" type="submit">Add</button>
+            <button className="sendButton" type="submit">Edit</button>
             {error && <span className="error">{error}</span>}
           </form>
         </div>
       </div>
       <div className="sideContainer">
-        <h1>Add thumbnail</h1>
+        <h1>Edit thumbnail</h1>
         {images.map((image, index) => (
           <img src={image} key={index} alt="" className="preview-image" />
         ))}
@@ -175,4 +185,4 @@ function AddNewsPage() {
   );
 }
 
-export default AddNewsPage;
+export default EditNewsPage;

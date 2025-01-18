@@ -1,13 +1,15 @@
 .newsList-container {
     max-width: 1000px;
-    margin: 0 auto; /* Căn giữa container */
+    margin: 0 auto;
+    /* Căn giữa container */
     padding: 1rem;
     font-family: Arial, sans-serif;
     height: 86vh;
     overflow-y: auto;
     scroll-behavior: smooth;
 }
-.newsList-container::-webkit-scrollbar{
+
+.newsList-container::-webkit-scrollbar {
     display: none;
 }
 
@@ -28,7 +30,10 @@
 .search {
     display: flex;
     align-items: center;
+    
 }
+
+
 
 .search input {
     padding: 0.5rem;
@@ -36,12 +41,13 @@
     border-radius: 4px 0 0 4px;
     font-size: 1rem;
     width: 200px;
+    height: 44px;
 }
 
 .search button {
     padding: 0.5rem 1rem;
     border: none;
-    background-color: #007bff;
+    background-color: #fece51;
     color: #fff;
     cursor: pointer;
     border-radius: 0 4px 4px 0;
@@ -51,6 +57,11 @@
 
 .search button:hover {
     background-color: #0056b3;
+}
+
+.search img {
+    width: 24px;
+    height: 24px;
 }
 
 .sort {

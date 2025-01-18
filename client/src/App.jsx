@@ -11,12 +11,13 @@ import Login from "./routes/login/login";
 import Register from "./routes/register/register";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 import NewPostPage from "./routes/newPostPage/newPostPage";
-import { listPageLoader, newPostPageLoader, newsPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
+import { listPageLoader, newsListLoader, newsPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
 import AdminPage from "./routes/adminPage/AdminPage";
 import UpdatePostPage from "./routes/updatePostPage/updatePostPage";
 import NewsList from "./routes/newsList/newsList";
 import NewsPage from "./routes/newsPage/newsPage";
 import AddNewsPage from "./routes/addNewsPage/addNewsPage";
+import EditNewsPage from "./routes/editNewsPage/editNewsPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -36,7 +37,7 @@ function App() {
         {
           path: "/news",
           element: <NewsList />,
-          loader: newPostPageLoader,
+          loader: newsListLoader,
         },
         {
           path: "/news/:id",
@@ -83,6 +84,11 @@ function App() {
         {
           path: "/news/add",
           element: <AddNewsPage />
+        },
+        {
+          path: "/news/edit/:id",
+          element: <EditNewsPage />,
+          loader: newsPageLoader,
         }
       ],
     },

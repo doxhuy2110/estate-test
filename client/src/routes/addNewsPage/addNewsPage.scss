@@ -1,0 +1,177 @@
+.addNewsPage {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  height: 85vh;
+  
+  .formContainer {
+    flex: 3;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 100%;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+      background-color: white;
+      padding: 10px 0;
+      z-index: 1;
+    }
+
+    .wrapper {
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .item {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          label {
+            font-weight: 500;
+            color: #555;
+          }
+
+          input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+
+            &:focus {
+              border-color: #007bff;
+            }
+          }
+
+          &.description {
+            .quill {
+              height: 200px; // Chiều cao cố định cho description
+              
+              .ql-container {
+                height: calc(200px - 42px); // Trừ đi chiều cao của toolbar
+              }
+
+              .ql-editor {
+                height: 100%;
+                overflow-y: auto;
+                
+                img {
+                  max-width: 100%;
+                  height: auto;
+                }
+              }
+            }
+          }
+
+          &.content {
+            height: 400px;
+            .quill {
+              height: 400px; // Chiều cao cố định cho content
+              
+              .ql-container {
+                height: calc(400px - 42px); // Trừ đi chiều cao của toolbar
+              }
+
+              .ql-editor {
+                height: 100%;
+                overflow-y: auto;
+                
+                img {
+                  max-width: 100%;
+                  height: auto;
+                }
+              }
+            }
+          }
+        }
+
+        .sendButton {
+          padding: 10px 20px;
+          background-color: #fece51;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          position: sticky;
+          bottom: 0;
+          margin-top: 20px;
+
+          &:hover {
+            background-color: #0056b3;
+          }
+        }
+
+        .error {
+          color: red;
+          font-size: 14px;
+          position: sticky;
+          bottom: 50px;
+        }
+      }
+    }
+  }
+
+  .sideContainer {
+    flex: 1;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    max-height: 85vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .preview-image {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+  }
+}
+
+// Đảm bảo thanh toolbar của ReactQuill không bị che khuất
+.ql-snow.ql-toolbar {
+  border: 1px solid #ddd;
+  border-radius: 5px 5px 0 0;
+  background-color: white;
+}
+
+.ql-container.ql-snow {
+  border: 1px solid #ddd;
+  border-top: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+// Tùy chỉnh scrollbar cho editor
+.ql-editor::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ql-editor::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.ql-editor::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.ql-editor::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

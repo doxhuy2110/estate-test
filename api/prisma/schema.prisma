@@ -60,21 +60,15 @@ model PostDetail {
 }
 
 model News {
-  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   title      String
   desc       String
+  content    String   // Lưu nội dung bài viết dưới dạng HTML hoặc JSON
   image      String
-  createdAt  DateTime        @default(now())
-  paragraphs NewsParagraph[]
+  views      Int      @default(0)
+  createdAt  DateTime @default(now())
 }
 
-model NewsParagraph {
-  id     String  @id @default(auto()) @map("_id") @db.ObjectId
-  text   String
-  image  String?
-  newsId String  @db.ObjectId
-  news   News    @relation(fields: [newsId], references: [id])
-}
 
 model SavedPost {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
