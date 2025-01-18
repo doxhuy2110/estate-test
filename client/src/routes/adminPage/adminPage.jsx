@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import apiRequest from "../../lib/apiRequest";
 import Card from "../../components/card/Card";
-import NewsItem from "../../components/newsItem/newsItem";
+import NewsItem from "../../components/newsItem/NewsItem";
 
 function AdminPage() {
     const navigate = useNavigate();
