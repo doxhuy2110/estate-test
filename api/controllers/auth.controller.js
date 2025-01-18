@@ -70,7 +70,7 @@ export const login = async (req, res) => {
       sameSite: 'none',
       domain: 'https://estate-app-w2y3.onrender.com', // domain của server
       maxAge: age,
-    })
+    }).status(200).json(userInfo);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to login!" });
